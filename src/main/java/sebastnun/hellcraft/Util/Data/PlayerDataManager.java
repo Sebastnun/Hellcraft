@@ -84,6 +84,25 @@ public class PlayerDataManager implements Listener, CommandExecutor {
     }
 
 
+    public int getHour(Player p){
+        long lS = (p.getStatistic(Statistic.valueOf("PLAY_ONE_MINUTE"))/20L);
+        int lH=0;
+        int lM=0;
+
+        while (lS>=60){
+            if (lS>=60){
+                lM++;
+                lS=lS-60;
+            }
+            if (lM>=60){
+                lH++;
+                lM=lM-60;
+            }
+        }
+        return lH;
+    }
+
+
 
 
 
