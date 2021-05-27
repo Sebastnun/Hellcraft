@@ -4,3 +4,9 @@ main: sebastnun.hellcraft.Main
 api-version: 1.16
 authors: [ Sebastnun ]
 description: El controlador del servidor Hellcraft
+
+
+commands:
+  helltime:
+    description: Obtener el tiempo total de baneo
+    usage: /<command>
