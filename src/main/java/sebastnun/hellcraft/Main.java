@@ -182,17 +182,21 @@ public final class Main extends JavaPlugin implements Listener {
     }
     private void setupTabList(){
         this.tab = new TablistManager();
-        tab.addHeaders("&a&l☠&c&l&oHellcraft&a&l☠");
-        //tab.addHeaders("&a&l☠&c&l&oHellcraft&a&l☠");
         tab.addHeaders("&6&l☠&c&l&oHellcraft&6&l☠");
-        //tab.addHeaders("&6&l☠&c&l&oHellcraft&6&l☠");
-        tab.addHeaders("&b&l☠&c&l&oHellcraft&b&l☠");
-        //tab.addHeaders("&b&l☠&c&l&oHellcraft&b&l☠");
-        tab.addHeaders("&e&l☠&c&l&oHellcraft&e&l☠");
-        //tab.addHeaders("&e&l☠&c&l&oHellcraft&e&l☠");
-        tab.addHeaders("&d&l☠&c&l&oHellcraft&d&l☠");
-        //tab.addHeaders("&d&l☠&c&l&oHellcraft&d&l☠");
 
+        tab.addHeaders("&e&l☠&c&l&oHellcraft&e&l☠");
+
+        tab.addHeaders("&a&l☠&c&l&oHellcraft&a&l☠");
+
+        tab.addHeaders("&b&l☠&c&l&oHellcraft&b&l☠");
+
+        tab.addHeaders("&9&l☠&c&l&oHellcraft&9&l☠");
+
+        tab.addHeaders("&d&l☠&c&l&oHellcraft&d&l☠");
+
+        tab.addHeaders("&f&l☠&c&l&oHellcraft&f&l☠");
+
+        tab.addHeaders("&c&l☠&c&l&oHellcraft&c&l☠");
 
         tab.showTab();
     }

@@ -50,8 +50,8 @@ public class TablistManager {
 
                         if(Bukkit.getOnlinePlayers().size() != 0){//"&c&lTiempo jugado: "+new PlayerDataManager().getTotalTime(p)+
                             //"              "+"&b&lVidas: &a&l"+Main.Lives.get(p)+"    "+p.getName()
-                            b.set(packet,new ChatComponentText(format("&c&lTiempo jugado: "+new PlayerDataManager().getTotalTime(p)+
-                                    "              "+"&b&lVidas: &a&l"+Main.Lives.get(p)+"    ")));
+                            b.set(packet,new ChatComponentText(format("    "+"&c&lTiempo jugado: "+new PlayerDataManager().getTotalTime(p)+
+                                    "         "+"&b&lVidas: &a&l"+Main.Lives.get(p)+"    ")));
                             ((CraftPlayer)p).getHandle().playerConnection.sendPacket(packet);
                         }
 

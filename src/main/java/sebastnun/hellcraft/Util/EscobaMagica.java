@@ -46,6 +46,30 @@ public class EscobaMagica{
 
             }
         },0,60);
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
+            @Override
+            public void run() {
+
+                for (Player p : Bukkit.getOnlinePlayers()){
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+                        @Override
+                        public void run() {
+                            CheckLives(p);
+                        }
+                    },((20)*60));
+                }
+
+                for (OfflinePlayer p : Bukkit.getOfflinePlayers()){
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+                        @Override
+                        public void run() {
+                            CheckLives(p);
+                        }
+                    },((20)*60));
+                }
+            }
+        },0,((20)*60)*3);
     }
 
     public void CheckLives(OfflinePlayer p){
@@ -64,7 +88,7 @@ public class EscobaMagica{
             }
         }
         main.reloadLives();
-        if (Main.Lives.get(p)<=0){
+        if (config.getInt("info.lives")<=0){
             config.set("info.isBanned",true);
         }
         if (config.getBoolean("info.isBanned")){

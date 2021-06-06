@@ -1,9 +1,11 @@
 package sebastnun.hellcraft.Listener.Player;
 
+import net.minecraft.server.v1_16_R3.PacketPlayInClientCommand;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -77,6 +79,23 @@ public class Events implements Listener {
         main.world.setGameRule(GameRule.DO_WEATHER_CYCLE,true);
         new EscobaMagica().CheckLives(e.getEntity().getPlayer());
         main.reloadLives();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+            @Override
+            public void run() {
+                Player player = e.getEntity();
+
+                PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
+                ((CraftPlayer) player).getHandle().playerConnection.a(packet);
+            }
+        },20);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+            @Override
+            public void run() {
+                Player player = e.getEntity();
+                new EscobaMagica().CheckLives(player);
+            }
+        },20);
+
     }
 
 
