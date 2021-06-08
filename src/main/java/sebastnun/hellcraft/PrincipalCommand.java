@@ -1,6 +1,7 @@
 package sebastnun.hellcraft;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Statistic;
 import org.bukkit.command.Command;
@@ -9,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import sebastnun.hellcraft.Entities.WildFire;
 import sebastnun.hellcraft.Util.Data.PlayerDataManager;
 
 public class PrincipalCommand implements CommandExecutor {
@@ -29,25 +31,29 @@ public class PrincipalCommand implements CommandExecutor {
                     try {
                         p.setStatistic(Statistic.PLAY_ONE_MINUTE, minutesToTicks(Integer.valueOf(args[1])));
                         p.sendMessage(format("&6Tu tiempo de juego es " + new PlayerDataManager().getTotalTime(p)));
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         p.sendMessage(format("&cIngresa un valor de minutos"));
                     }
                     return true;
-                }else if(args[0].equalsIgnoreCase("addtime")){
+                } else if (args[0].equalsIgnoreCase("addtime")) {
                     try {
-                        p.setStatistic(Statistic.PLAY_ONE_MINUTE, (p.getStatistic(Statistic.PLAY_ONE_MINUTE)+minutesToTicks(Integer.valueOf(args[1]))));
+                        p.setStatistic(Statistic.PLAY_ONE_MINUTE, (p.getStatistic(Statistic.PLAY_ONE_MINUTE) + minutesToTicks(Integer.valueOf(args[1]))));
                         p.sendMessage(format("&6Tu tiempo de juego es " + new PlayerDataManager().getTotalTime(p)));
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         p.sendMessage(format("&cIngresa un valor de minutos"));
                     }
                     return true;
-                }else if (args[0].equalsIgnoreCase("restTime")) {
+                } else if (args[0].equalsIgnoreCase("restTime")) {
                     try {
-                        p.setStatistic(Statistic.PLAY_ONE_MINUTE, (p.getStatistic(Statistic.PLAY_ONE_MINUTE)-minutesToTicks(Integer.valueOf(args[1]))));
+                        p.setStatistic(Statistic.PLAY_ONE_MINUTE, (p.getStatistic(Statistic.PLAY_ONE_MINUTE) - minutesToTicks(Integer.valueOf(args[1]))));
                         p.sendMessage(format("&6Tu tiempo de juego es " + new PlayerDataManager().getTotalTime(p)));
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         p.sendMessage(format("&cIngresa un valor de minutos"));
                     }
+                    return true;
+                }else if (args[0].equalsIgnoreCase("mob")) {
+                    p.sendMessage(ChatColor.BLUE+"Se ha invocado el mob");
+                    new WildFire(p.getLocation());
                     return true;
                 }else {
                     p.sendMessage("&cIngresa un comando valido");

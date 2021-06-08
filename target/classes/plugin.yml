@@ -1,0 +1,23 @@
+name: HellcraftManager
+version: 2.0-SNAPSHOT
+main: sebastnun.hellcraft.Main
+api-version: 1.16
+author: Sebastnun
+description: El controlador del servidor Hellcraft
+load: POSTWORLD
+
+permissions:
+  hellcraft.admin:
+    description: Dado a los admins de hellcraft
+
+
+commands:
+  helltime:
+    description: Obtener el tiempo total de baneo
+    usage: /<command>
+  afk:
+    description: Ponerte en afk
+    usage: /<command>
+  hc:
+    description: Ponerte en afk
+    usage: /<command>

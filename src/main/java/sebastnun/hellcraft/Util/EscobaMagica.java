@@ -92,6 +92,8 @@ public class EscobaMagica{
             config.set("info.isBanned",true);
         }
         if (config.getBoolean("info.isBanned")){
+            if(!config.contains("info.IP"))
+                return;
             Bukkit.getServer().getBanList(BanList.Type.IP).addBan(config.getString("info.IP"),Main.format("&c&lHas sido baneado"),null,p.getName());
             if (p.isOnline()){
                 p.getPlayer().kickPlayer(Main.format("&c&lHas sido baneado"));
