@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="HellcraftManager:jar">
+    <output-path>$USER_HOME$/Escritorio</output-path>
+    <root id="archive" name="Hellcraft.jar">
+      <element id="module-output" name="Hellcraft" />
+      <element id="extracted-dir" path="$USER_HOME$/Escritorio/Hellcraft/plugins/LuckPerms.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Escritorio/Hellcraft/spigot.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Escritorio/Hellcraft/plugins/JDA-4.2.0_227.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Escritorio/Hellcraft/plugins/worldedit.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/20.1.0/annotations-20.1.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

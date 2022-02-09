@@ -1,0 +1,13 @@
+End:
+  Enable: true
+  Message: "&6No pudes ir al end todavia"
+
+DateManager: false
+
+DiscordEnable: true
+
+Channels:
+  Muertes: "825580214994075708"
+  Anuncios: "825820218626408508"
+
+Token: "ODI5OTU1NzgyNTA1OTIyNTgw.YG_qjg.pxqlIW2s84skmnm4iOpQcsa-Nso"

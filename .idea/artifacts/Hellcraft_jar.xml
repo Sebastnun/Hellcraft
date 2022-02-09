@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Hellcraft:jar">
+    <output-path>$USER_HOME$/Escritorio/Tester/plugins</output-path>
+    <root id="archive" name="Hellcraft.jar">
+      <element id="module-output" name="Hellcraft" />
+    </root>
+  </artifact>
+</component>

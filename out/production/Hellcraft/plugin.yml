@@ -1,0 +1,36 @@
+main: com.hellcraft.Main
+name: HellcraftManager
+version: 1.9
+author: Sebastnun
+api-version: 1.16
+depend: [WorldEdit, LuckPerms, JDA, NBTAPI, ServersNPC]
+
+
+permissions:
+  hellcraft.lives:
+    description: lives of hellcraft
+  hellcraft.kit:
+    description: get kits
+  hellcraft.admin:
+    description: Ser Admin
+  hellcraft.ovni:
+    description: Ser ovni
+  hellcraft.keepinventory:
+    description: Conservar tu inventario
+
+commands:
+  kit:
+    description: Kits
+    usage: /<command>
+  lives:
+    description: set lives
+    usage: /<command>
+  rango:
+    description: Comando para conseguir el rango
+    usage: /<command>
+  texture:
+    description: Comando para conseguir la textura
+    usage: /<command>
+  hc:
+    description: Comando Principal
+    usage: /<command>
