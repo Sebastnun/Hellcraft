@@ -13,10 +13,13 @@ import sebastnun.hellcraft.Items.Chains;
 import sebastnun.hellcraft.Main;
 
 
-public class EvilBlas {
+public class EvilBlas extends Boss{
 
 
     public EvilBlas(Location loc){
+
+        super(TypeBoss.EVILBLAS,loc, 0);
+
         Zombie z = loc.getWorld().spawn(loc,Zombie.class);
 
         ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);

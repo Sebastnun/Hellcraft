@@ -30,7 +30,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 
-public class EnderMan implements Listener {
+public class EnderMan extends Boss implements Listener {
 
     private static final int health = 1000;
 
@@ -42,9 +42,12 @@ public class EnderMan implements Listener {
 
     private static BossBar bossEnderman;
 
-    public EnderMan(){this.phase=0;}
+    public EnderMan(){
+        super(TypeBoss.ENDERMAN, null);
+        this.phase=0;}
 
     public EnderMan(Location loc, CommandSender sender){
+        super(TypeBoss.ENDERMAN,loc);
         String modelID = "enderman";
         ender = loc.getWorld().spawn(loc,Zombie.class);
 

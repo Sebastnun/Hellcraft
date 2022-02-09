@@ -22,13 +22,13 @@ public class Boss implements Listener {
 
     private final World world;
 
-    private int phase;
+    public int phase;
 
-    public Boss(TypeBoss typeBoss, Location loc){
+    public Boss(TypeBoss typeBoss, Location loc, int phase){
         this.typeBoss = typeBoss;
         this.loc = loc;
         this.world = Main.getEventsWorld();
-        this.phase = 0;
+        this.phase = phase;
 
         switch (typeBoss){
             case ENDERMAN:
@@ -50,9 +50,12 @@ public class Boss implements Listener {
 
 
 
+    //Private Metoths
+    public void setPhase(int phase){this.phase = phase;}
 
 
 
+    //Public Metoths
     public int getPhase() { return phase; }
 
     public World getWorld() { return world; }
