@@ -1,5 +1,10 @@
 package sebastnun.hellcraft.Util.Data;
 
+import me.lucko.luckperms.LuckPerms;
+import me.lucko.luckperms.api.Contexts;
+import me.lucko.luckperms.api.LuckPermsApi;
+import me.lucko.luckperms.api.Node;
+import me.lucko.luckperms.api.User;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
@@ -8,12 +13,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.meta.FireworkMeta;
 import sebastnun.hellcraft.Main;
 import sebastnun.hellcraft.Util.Commands.AFK;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -50,11 +57,10 @@ public class PlayerDataManager implements Listener, CommandExecutor {
 
     public String getTotalTime(Player player){
         Player p  = player.getPlayer();
-        AFK afk = new AFK();
         int lS;
-        if (afk.contains(p)){
-            player.setStatistic(Statistic.PLAY_ONE_MINUTE,afk.getAFK(p));
-            lS= (afk.getAFK(p)/20);
+        if (AFK.contains(p)){
+            player.setStatistic(Statistic.PLAY_ONE_MINUTE,AFK.getAFK(p));
+            lS= (AFK.getAFK(p)/20);
         }else {
             lS = (player.getStatistic(Statistic.PLAY_ONE_MINUTE)/20);
         }
@@ -73,13 +79,13 @@ public class PlayerDataManager implements Listener, CommandExecutor {
 
         String msg;
         if (!(lH>main.getHoraMinima())){
-            if (afk.contains(p)){
+            if (AFK.contains(p)){
                 msg="&7&l";
             }else {
                 msg="&c&l";
             }
         }else {
-            if (afk.contains(p)){
+            if (AFK.contains(p)){
                 msg="&7";
             }else {
                 msg="&a";
@@ -160,6 +166,8 @@ public class PlayerDataManager implements Listener, CommandExecutor {
         File file = new File(folder + File.separator + uuid+".yml");
         config = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
 
+        FireWorks(e.getPlayer().getLocation());
+
         if (file.exists())
             return;
 
@@ -175,6 +183,8 @@ public class PlayerDataManager implements Listener, CommandExecutor {
             config.set("info.IP",e.getPlayer().getAddress().getHostName());
         if (!config.contains("info.hasRank"))
             config.set("info.hasRank",Boolean.valueOf("false"));
+        if (!config.contains("info.team"))
+            config.set("info.team","null");
         if (!config.contains("info.lastLocation")){
             config.set("info.lastLocation.x",0.0);
             config.set("info.lastLocation.y",0.0);
@@ -182,6 +192,8 @@ public class PlayerDataManager implements Listener, CommandExecutor {
             config.set("info.lastLocation.yaw",0.0);
             config.set("info.lastLocation.pitch",0.0);
         }
+
+
 
         if (!file.exists()) {
             try {
@@ -195,17 +207,33 @@ public class PlayerDataManager implements Listener, CommandExecutor {
                 Bukkit.getConsoleSender().sendMessage(main.format("&c[ERROR] No se cargo el archivo de configuracion del jugador " + e.getPlayer().getName()));
             }
         }
-        main.reloadLives();
+        main.reloadLives(e.getPlayer());
 
     }
 
 
-    public void Medalla(){
+    public void Medalla(Player player){
+        if (!player.getName().equals("MaviGamer"))return;
 
     }
 
 
+    private void FireWorks(Location location){
+        Firework firework = location.getWorld().spawn(location.add(1,0.5,1),Firework.class);
+        Firework firework1 = location.getWorld().spawn(location.add(-1,0.5,1),Firework.class);
+        Firework firework2 = location.getWorld().spawn(location.add(1,0.5,-1),Firework.class);
+        Firework firework3 = location.getWorld().spawn(location.add(-1,0.5,-1),Firework.class);
 
+        FireworkMeta fireworkMeta = firework.getFireworkMeta();
+
+        fireworkMeta.setPower(2);
+        fireworkMeta.addEffect(FireworkEffect.builder().withColor(Color.BLUE).withTrail().build());
+        firework.setFireworkMeta(fireworkMeta);
+        firework1.setFireworkMeta(fireworkMeta);
+        firework2.setFireworkMeta(fireworkMeta);
+        firework3.setFireworkMeta(fireworkMeta);
+
+    }
 
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -239,7 +267,6 @@ public class PlayerDataManager implements Listener, CommandExecutor {
         } catch (IOException er) {
             Bukkit.getConsoleSender().sendMessage(main.format("&c[ERROR] No se cargo el archivo de configuracion del jugador " + e.getPlayer().getName()));
         }
-        main.reloadLives();
     }
 
     private int ticktoMinutes(int tick){

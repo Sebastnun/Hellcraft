@@ -1,24 +1,24 @@
 package sebastnun.hellcraft.Util.Manager;
 
-import net.minecraft.server.v1_16_R3.*;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketContainer;
+import net.minecraft.network.chat.ChatComponentText;
+import net.minecraft.server.level.EntityPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import sebastnun.hellcraft.Main;
 import sebastnun.hellcraft.Util.Data.PlayerDataManager;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class TablistManager {
-
-    private List<ChatComponentText> headers = new ArrayList<>();
-    private List<ChatComponentText> footers = new ArrayList<>();
+public class PlayerListManager {
+    private List<String> headers = new ArrayList<>();
     private Main plugin = Main.getInstance();
 
     public void showTab(){
@@ -29,30 +29,25 @@ public class TablistManager {
 
             int count1 = 0;//header
             int count2 = 0;//footers
-            Scoreboard scoreboard = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
+            Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
             @Override
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers()){
                     try {
-                        PacketPlayOutPlayerListHeaderFooter packet =new PacketPlayOutPlayerListHeaderFooter();
-
-                        Field a = packet.getClass().getDeclaredField("header");
-                        a.setAccessible(true);
-                        Field b = packet.getClass().getDeclaredField("footer");
-                        b.setAccessible(true);
-
                         //registerTeams(scoreboard);
                         if (count1 >= headers.size())
                             count1=0;
-                        if (count2 >= footers.size())
-                            count2=0;
-                        a.set(packet,headers.get(count1));
+                        p.setPlayerListHeader(headers.get(count1) + "\n" +
+                                "Equipo: Ninguno");
 
-                        if(Bukkit.getOnlinePlayers().size() != 0){//"&c&lTiempo jugado: "+new PlayerDataManager().getTotalTime(p)+
-                            //"              "+"&b&lVidas: &a&l"+Main.Lives.get(p)+"    "+p.getName()
-                            b.set(packet,new ChatComponentText(format("    "+"&c&lTiempo jugado: "+new PlayerDataManager().getTotalTime(p)+
-                                    "         "+"&b&lVidas: &a&l"+Main.Lives.get(p)+"    ")));
-                            ((CraftPlayer)p).getHandle().playerConnection.sendPacket(packet);
+                        if(Bukkit.getOnlinePlayers().size() != 0){
+                            if(p.isOp()){
+                                p.setPlayerListFooter(format("    "+"&c&lTiempo jugado: "+new PlayerDataManager().getTotalTime(p)+
+                                        "         "+"&b&lVidas: &a&l&k00&r    "));
+                            }else {
+                                p.setPlayerListFooter(format("    "+"&c&lTiempo jugado: "+new PlayerDataManager().getTotalTime(p)+
+                                        "         "+"&b&lVidas: &a&l"+Main.Lives.get(p)+"    "));
+                            }
                         }
 
                         count1++;
@@ -70,15 +65,18 @@ public class TablistManager {
 
 
 
-    private void AddPacket(PacketPlayOutPlayerListHeaderFooter packet){
+   /* private void AddPacket(PacketPlayOutPlayerListHeaderFooter packet){
         for (Player p : Bukkit.getOnlinePlayers()){
+            ProtocolManager manager = ProtocolLibrary.getProtocolManager();
+            PacketContainer pack = manager.createPacket(PacketType.Play.Client.CHAT);
+
             try {
                 Field b = packet.getClass().getDeclaredField("footer");
                 p.sendMessage(p.getName());
                 if (p.getName()==p.getName()){
                     b.set(packet,new ChatComponentText(format("&c&lTiempo jugado: "+new PlayerDataManager().getTotalTime(p)+
                             "              "+"&b&lVidas: &a&l"+Main.Lives.get(p)+"    "+p.getName())));
-                    ((CraftPlayer)p).getHandle().playerConnection.sendPacket(packet);
+                    ((CraftPlayer)p).getHandle().
                 }
 
             }catch (Exception e){
@@ -87,9 +85,7 @@ public class TablistManager {
         }
 
 
-
-
-    }
+    }*/
 
 
 
@@ -199,17 +195,10 @@ public class TablistManager {
 
 
     public void addHeaders(String header){
-        this.headers.add(new ChatComponentText(format(header)));
-    }
-
-    public void addFooters(String footer){
-        this.footers.add(new ChatComponentText(format(footer)));
+        this.headers.add(format(header));
     }
 
     private static String format(String texto){
         return ChatColor.translateAlternateColorCodes('&',texto);
     }
-
-
-
 }

@@ -87,7 +87,7 @@ public class EscobaMagica{
                 config.set("info.hasRank",true);
             }
         }
-        main.reloadLives();
+        main.reloadLives(p);
         if (config.getInt("info.lives")<=0){
             config.set("info.isBanned",true);
         }
@@ -104,7 +104,7 @@ public class EscobaMagica{
         } catch (IOException er) {
             Bukkit.getConsoleSender().sendMessage(main.format("&c[ERROR] No se cargo el archivo de configuracion del jugador " + p.getName()));
         }
-        main.reloadLives();
+        main.reloadLives(p);
     }
 
 
@@ -146,11 +146,11 @@ public class EscobaMagica{
         if (!(pd.getOfflineHour(p)>main.getHoraMinima())&&checkedPlayer.contains(p)){
             if (!p.isOnline()){
                 main.configuration(p).set("info.lives",(main.configuration(p).getInt("info.lives")-1));
-                main.reloadLives();
+                main.reloadLives(p);
             }else if(!checkedPlayer.contains(p)){
                 p.sendMessage(main.format("Haz perdido una vida"));
                 main.configuration(p).set("info.lives",(main.configuration(p).getInt("info.lives")-1));
-                main.reloadLives();
+                main.reloadLives(p);
             }
         }
         if (checkedPlayer.contains(p))
@@ -184,7 +184,7 @@ public class EscobaMagica{
             } catch (IOException er) {
                 Bukkit.getConsoleSender().sendMessage(main.format("&c[ERROR] No se cargo el archivo de configuracion del jugador " + p.getName()));
             }
-            main.reloadLives();
+            main.reloadLives(p);
         }
         if (checkedPlayer.contains(p))
             return;
@@ -200,14 +200,19 @@ public class EscobaMagica{
     public void reloadPlay_One_Minute() {
         LocalDate now = LocalDate.now();
         java.util.Date fecha = new Date();
-        if (fecha.getDay()!=0)
-            return;
+
+        if (!Main.getInstance().getConfig().getBoolean("TimeBan"))return;
+
+        if (fecha.getDay()!=0) return;
+
         if (this.fechaActual.isBefore(now)) {
             this.fechaActual = now;
             for (Player pl : Bukkit.getOnlinePlayers())
                 pl.getPlayer().setStatistic(Statistic.PLAY_ONE_MINUTE,0);
             for (OfflinePlayer pl : Bukkit.getOfflinePlayers())
-                pl.getPlayer().setStatistic(Statistic.PLAY_ONE_MINUTE,0);
+                pl.setStatistic(Statistic.PLAY_ONE_MINUTE,0);
+
+            Bukkit.getConsoleSender().sendMessage(Main.format("&6Se ha reiniciado el tiempo a todos los jugadores"));
         }
     }
 

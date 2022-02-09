@@ -1,14 +1,19 @@
 name: HellcraftManager
 version: 2.0-SNAPSHOT
 main: sebastnun.hellcraft.Main
-api-version: 1.16
+api-version: 1.17
 author: Sebastnun
 description: El controlador del servidor Hellcraft
 load: POSTWORLD
+depend: []
 
 permissions:
   hellcraft.admin:
     description: Dado a los admins de hellcraft
+  hellcraft.hell:
+    description: Otorga el poder de usar la HellBench
+  hellcraft.help:
+    description: Helper de Hellcraft
 
 
 commands:
@@ -19,5 +24,9 @@ commands:
     description: Ponerte en afk
     usage: /<command>
   hc:
-    description: Ponerte en afk
+    description: Comando para Admins
     usage: /<command>
+  hell:
+    description: Comando para desplegar la GUI
+    usage: /<command>
+

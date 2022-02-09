@@ -10,8 +10,10 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -29,7 +31,7 @@ import java.util.Random;
 
 public class AFK implements CommandExecutor, Listener {
 
-    private final Main main = Main.getInstance();
+    private static final Main main = Main.getInstance();
 
     public static HashMap<Player,Integer> activeAFK = new HashMap<>();
 
@@ -57,6 +59,8 @@ public class AFK implements CommandExecutor, Listener {
 
     /*@EventHandler(priority = EventPriority.HIGHEST)
     public void onExplode(EntityExplodeEvent e) {
+        if (!e.getEntity().getCustomName().equalsIgnoreCase("tnt"))
+            return;
         if (e.getEntity() instanceof TNTPrimed) {
             if (!e.blockList().isEmpty()) {
                 List<FallingBlock> fallingBlocks = new ArrayList<>();
@@ -88,6 +92,8 @@ public class AFK implements CommandExecutor, Listener {
     }*/
 
 
+
+
     @EventHandler
     private void onDisconected(PlayerQuitEvent e){
         if (e.getPlayer().getPersistentDataContainer().has(new NamespacedKey(main,"afk"), PersistentDataType.BYTE)){
@@ -98,15 +104,21 @@ public class AFK implements CommandExecutor, Listener {
         }
     }
 
-    public void addAFK(Player p,int i){
+    public static void addAFK(Player p,int i){
+        if (!p.getPersistentDataContainer().has(new NamespacedKey(main,"afk"), PersistentDataType.BYTE)&&!activeAFK.containsKey(p))
+            p.getPersistentDataContainer().set(new NamespacedKey(main,"afk"),PersistentDataType.BYTE,Byte.valueOf((byte) 1));
+
         activeAFK.put(p,i);
     }
 
-    public void removeAFK(Player p){
+    public static void removeAFK(Player p){
+        if (p.getPersistentDataContainer().has(new NamespacedKey(main,"afk"), PersistentDataType.BYTE)&&!activeAFK.containsKey(p))
+            p.getPersistentDataContainer().remove(new NamespacedKey(main,"afk"));
+
         activeAFK.remove(p);
     }
 
-    public int getAFK(Player p){
+    public static int getAFK(Player p){
         return activeAFK.get(p);
     }
 
@@ -114,7 +126,7 @@ public class AFK implements CommandExecutor, Listener {
         return activeAFK;
     }
 
-    public boolean contains(Player key){
+    public static boolean contains(Player key){
         return activeAFK.containsKey(key);
     }
 

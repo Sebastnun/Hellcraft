@@ -13,7 +13,7 @@
 
     <description>El controlador del servidor Hellcraft</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <org.apache.commons.lang3.version>3.6</org.apache.commons.lang3.version>
@@ -96,6 +96,12 @@
             <url>https://mvn.lumine.io/repository/maven-releases/</url>
         </repository>
 
+        <!--AnvilGUI-->
+        <repository>
+            <id>codemc-snapshots</id>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -103,7 +109,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.17-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!--JDA-->
@@ -111,26 +117,28 @@
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>4.1.1_153</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <!--WorldEdit-->
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
             <version>6.1.4-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <!--LuckPerms-->
         <dependency>
             <groupId>me.lucko.luckperms</groupId>
             <artifactId>luckperms-api</artifactId>
             <version>4.0</version>
+            <scope>provided</scope>
         </dependency>
         <!--ProtocolLib-->
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.6.0</version>
+            <scope>provided</scope>
         </dependency>
         <!--Model Engine-->
         <dependency>
@@ -139,5 +147,14 @@
             <version>R2.1.6</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--Anvil GUI-->
+        <dependency>
+            <groupId>net.wesjd</groupId>
+            <artifactId>anvilgui</artifactId>
+            <version>1.5.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 </project>
